@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DevOps Task Tracker</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">&#9881;</span> DEVOPS TASK TRACKER</div>
+    <div class="status">
+      <span id="env-badge" class="badge env">ENV: --</span>
+      <span id="version" class="badge">v--</span>
+      <span id="health" class="badge health unknown" title="Checks /health every 15s"><i></i><b>Checking</b></span>
+      <button id="theme" class="icon-btn" aria-label="Toggle light/dark theme">&#9788;</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="cards" aria-label="Summary">
+      <div class="card"><span>Total</span><strong id="c-total">0</strong></div>
+      <div class="card"><span>Pending</span><strong id="c-pending">0</strong></div>
+      <div class="card"><span>Completed</span><strong id="c-done">0</strong></div>
+    </section>
+
+    <section class="panel">
+      <h2>Add task</h2>
+      <form id="add-form" novalidate>
+        <input id="f-title" name="title" placeholder="Task title" maxlength="120" required aria-label="Title">
+        <input id="f-desc" name="description" placeholder="Description (optional)" maxlength="500" aria-label="Description">
+        <select id="f-prio" aria-label="Priority">
+          <option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option>
+        </select>
+        <button class="btn primary" type="submit">Add Task</button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <div class="list-head">
+        <h2>Tasks</h2>
+        <div class="filters" role="group" aria-label="Filter tasks">
+          <button class="chip active" data-filter="all">All</button>
+          <button class="chip" data-filter="pending">Pending</button>
+          <button class="chip" data-filter="completed">Completed</button>
+        </div>
+      </div>
+      <div id="state" class="state" role="status"></div>
+      <ul id="tasks" class="tasks"></ul>
+    </section>
+
+    <p class="note">Learning app: tasks live in memory and disappear when the container restarts.</p>
+  </main>
+
+  <dialog id="edit-dialog">
+    <form id="edit-form" method="dialog" novalidate>
+      <h3>Edit task</h3>
+      <input id="e-title" maxlength="120" required aria-label="Title">
+      <input id="e-desc" maxlength="500" aria-label="Description">
+      <select id="e-prio" aria-label="Priority"><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option></select>
+      <div class="dialog-actions">
+        <button type="button" id="e-cancel" class="btn">Cancel</button>
+        <button type="submit" class="btn primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toasts" aria-live="polite"></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
